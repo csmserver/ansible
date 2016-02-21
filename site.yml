@@ -1,4 +1,4 @@
-- hosts: csm
+- hosts: all
   roles:
     - { role: mysqlserver, become: true }
     - { role: supervisor, become: true }
