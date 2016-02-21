@@ -6,10 +6,13 @@
 
 ## Clone this repository
 
-```git clone https://github.com/csmserver/ansible.git```
+```
+  git clone https://github.com/csmserver/ansible.git
+  cd ansible
+```
 
 ## Edit update the production file
-The example list of productin servers is included in the repo. It needs to be updated. Here is the example:
+The example file with the list of production servers is included in the repo: `production`. The file needs to be updated accordingly. Here is the example:
 
 ```csm ansible_host=172.28.22.62 ansible_user=administrator```
 
