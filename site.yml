@@ -1,0 +1,6 @@
+- hosts: csm
+  roles:
+    - { role: mysqlserver, become: true }
+    - { role: supervisor, become: true }
+    - { role: csmserver, become: true }
+    - { role: csmpe, become: true, when: install_csmpe }

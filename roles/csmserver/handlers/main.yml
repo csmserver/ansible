@@ -1,0 +1,8 @@
+---
+
+- name: restart csmserver
+  supervisorctl: name=csmserver state=restarted
+  notify: restart dispacher
+  
+- name: restart dispatcher
+  supervisorctl: name=dispacher state=restarted

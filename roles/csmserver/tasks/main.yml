@@ -1,0 +1,69 @@
+- name: Add csmserver group
+  group: name=csmserver
+- name: Add csmserver user
+  user: name=csmserver group=csmserver comment='CSM Server' createhome=yes shell='/bin/bash'
+
+- name: Make CSM directory
+  file: path='{{ csm_path }}' owner=csmserver group=csmserver state=directory mode=0755
+
+- name: Install Packages
+  apt: package='{{ item }}' state=installed update_cache=yes cache_valid_time=3600 
+  when: ansible_os_family == 'Debian'
+  with_items:
+    - git
+    - python-pip
+    - python-dev
+    - python-crypto
+    - python-virtualenv
+    - gunicorn
+
+- name: Set git proxy(http)
+  shell: "git config --system http.proxy {{ http_proxy }}"
+  ignore_errors: yes
+  when: http_proxy is defined
+  become: true
+
+- name: Install CSM from github repo
+  git: repo='{{ git_repo }}' dest='{{ csm_path }}/csm' force=yes
+  become_user: csmserver
+
+- name: Create database.ini config
+  template: src=database.ini.j2 dest={{ csm_path }}/csm/csmserver/database.ini force=yes
+  become_user: csmserver
+
+- name: Create Virtualenv
+  shell: virtualenv {{ csm_path }}/csm/csmserver/env creates="{{ csm_path }}/csm/csmserver/env/bin/activate"
+  become_user: csmserver
+
+- name: Enable virtualenv in .bashrc
+  lineinfile: dest='/home/csmserver/.bashrc'
+              line="source {{ csm_path }}/csm/csmserver/env/bin/activate"
+  become_user: csmserver
+
+- name: Install Python Packages with Proxy
+  pip: 
+    requirements={{ csm_path }}/csm/csmserver/requirements.txt 
+    virtualenv={{ csm_path }}/csm/csmserver/env
+    extra_args='--proxy={{ http_proxy }}'
+  when: http_proxy is defined
+  become_user: csmserver
+
+- name: Install Python Packages
+  pip: 
+    requirements={{ csm_path }}/csm/csmserver/requirements.txt 
+    virtualenv={{ csm_path }}/csm/csmserver/env
+  when: http_proxy is not defined
+  become_user: csmserver
+
+- name: Initialize CSM Server
+  shell: "{{ csm_path }}/csm/csmserver/env/bin/python initialize.py"
+  args:
+    chdir: '{{ csm_path }}/csm/csmserver/'
+  become_user: csmserver
+
+- name: Install supervisor configuration
+  template: >
+    src=csmserver.conf.j2
+    dest=/etc/supervisor/conf.d/csmserver.conf
+  notify: reload supervisor config
+

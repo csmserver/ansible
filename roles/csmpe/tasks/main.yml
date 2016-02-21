@@ -1,0 +1,17 @@
+---
+# Install CSM Plugin Engine
+- name: Install CSM Plugin Engine (Proxy)
+  pip: name=csmpe
+    virtualenv={{ csm_path }}/csm/csmserver/env
+    extra_args='--proxy={{ http_proxy }}'
+  
+  when: http_proxy is defined
+  become_user: csmserver
+
+- name: Install CSM Plugin Engine
+  pip: name=csmpe
+    virtualenv={{ csm_path }}/csm/csmserver/env
+  
+  when: http_proxy is not defined
+  become_user: csmserver
+

@@ -1,0 +1,43 @@
+---
+# This playbook will install mysql and create db user and give permissions.
+
+- name: Check for previous installation
+  shell: "[ -f /usr/sbin/mysqld ]"
+  ignore_errors: True
+  register: mysqld_exists
+
+- name: Set MySQL root password before installing
+  debconf: name='mysql-server' question='mysql-server/root_password' value='{{mysql_root_pass | quote}}' vtype='password'
+  when: mysqld_exists|failed
+
+- name: Confirm MySQL root password before installing
+  debconf: name='mysql-server' question='mysql-server/root_password_again' value='{{mysql_root_pass | quote}}' vtype='password'
+  when: mysqld_exists|failed
+
+- name: Install MySQL
+  apt: package={{ item }} state=installed force=yes update_cache=yes cache_valid_time=3600
+  with_items:
+    - mysql-server
+    - mysql-client
+    - python-mysqldb
+  when: mysqld_exists|failed
+
+- name: Delete anonymous MySQL server user for localhost
+  mysql_user: user="" state="absent" login_password="{{ mysql_root_pass }}" login_user=root
+
+- name: Secure the MySQL root user
+  mysql_user: user="root" password="{{ mysql_root_pass }}" host="{{ item }}" login_password="{{ mysql_root_pass }}" login_user=root
+  with_items:
+    - 127.0.0.1
+    - localhost
+    - ::1
+    - "{{ ansible_fqdn }}"
+
+- name: Remove the MySQL test DB
+  mysql_db: db=test state=absent login_password="{{ mysql_root_pass }}" login_user=root
+
+- name: Create CSM Server DB
+  mysql_db: login_user=root login_password="{{ mysql_root_pass }}" db={{ dbname }} state=present
+
+- name: Create CSM Server DB user
+  mysql_user: login_user=root login_password="{{ mysql_root_pass }}" name={{ dbuser }} password={{ dbpass }} priv=*.*:ALL host='%' state=present

@@ -1,0 +1,13 @@
+mysql_root_pass: root
+dbuser: csm
+dbpass: csm
+dbname: csmdb
+
+csm_path: /opt/csm
+git_repo: https://github.com/csm-aut/csm.git
+http_proxy: https://proxy-rtp-1.cisco.com:8080
+
+supervisor_webuser: supervisor
+supervisor_webpass: supervisor
+
+install_csmpe: true

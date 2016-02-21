@@ -1,0 +1,17 @@
+[program:csmserver]
+command={{ csm_path }}/csm/csmserver/env/bin/gunicorn -w 4 -b 0.0.0.0:5000 --timeout 60 csmserver:app
+user=csmserver
+autostart=true
+autorestart=true
+directory={{ csm_path }}/csm/csmserver/
+environment=VIRTUAL_ENV="/opt/csm/csm/csmserver/env",PATH="$VIRTUAL_ENV/bin:$PATH"
+
+[program:dispatcher]
+command={{ csm_path }}/csm/csmserver/env/bin/python csmdispatcher.py
+user=csmserver
+autostart=true
+autorestart=true
+directory={{ csm_path }}/csm/csmserver/
+stopsignal=KILL
+stopasgroup=true
+killasgroup=true

@@ -1,0 +1,23 @@
+---
+
+- name: Install supervisor
+  apt: >
+    name=supervisor
+    update_cache=yes
+    cache_valid_time=300
+    state=present
+
+- name: Enable Web Interface
+  blockinfile:
+    dest: /etc/supervisor/supervisord.conf
+    marker: "; {mark} ANSIBLE MANAGED BLOCK"
+    block: |
+      
+      [inet_http_server]
+      port=*:5001
+      username={{ supervisor_webuser }}
+      password={{ supervisor_webpass }}
+  notify: reload supervisor config
+
+- name: ensure supervisor is running
+  service: name=supervisor state=started enabled=yes
