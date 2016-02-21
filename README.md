@@ -29,7 +29,8 @@ It defines host `csm` with ip `172.28.22.62` and username `administrator`
 
 The default configuration variables are in group_vars/all file.
 
-```# default root password for mysql 
+```
+  # default root password for mysql 
   mysql_root_pass: root
   # default DB user for CSM Server
   dbuser: csm
@@ -41,16 +42,16 @@ The default configuration variables are in group_vars/all file.
   # default installation path
   csm_path: /opt/csm
 
-# git repo for CSM Server file
-git_repo: https://github.com/csm-aut/csm.git
+  # git repo for CSM Server file
+  git_repo: https://github.com/csm-aut/csm.git
 
-# http proxy if needed ( could be removed )
-http_proxy: https://proxy-rtp-1.cisco.com:8080
+  # http proxy if needed ( could be removed )
+  http_proxy: https://proxy-rtp-1.cisco.com:8080
 
-# supervisor user and password for http interface
-supervisor_webuser: supervisor
-supervisor_webpass: supervisor
+  # supervisor user and password for http interface
+  supervisor_webuser: supervisor
+  supervisor_webpass: supervisor
 
-# Optional installation of CSM Plugin Engine
-install_csmpe: true```
+  # Optional installation of CSM Plugin Engine
+  install_csmpe: true```
 
