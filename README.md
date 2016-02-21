@@ -68,6 +68,6 @@ The default configuration variables are in group_vars/all file.
 The CSM Server can be controlled by supervisord Web GUI.
 The WebGUI is running on port 5001.
 
-![Alt text](/Screenshots/supervisord.png) "Supervisord WebGUI Screenshot")
+![Alt text](/Screenshots/supervisord.png "Supervisord WebGUI Screenshot")
 
 
