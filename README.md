@@ -2,7 +2,9 @@
 
 ## Install Ansible
 
-```pip install ansible```
+```
+  pip install ansible
+```
 
 ## Clone this repository
 
@@ -20,7 +22,9 @@ It defines host `csm` with ip `172.28.22.62` and username `administrator`
 
 # Play the playbook to install CSM Server
 
-```ansible-playbook -i production site.yml --ask-become-pass --ask-pass```
+```
+  ansible-playbook -i production site.yml --ask-become-pass --ask-pass
+```
 
 # The following steps will be done automatically
 
