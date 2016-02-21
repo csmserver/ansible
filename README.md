@@ -23,7 +23,7 @@ It defines host `csm` with ip `172.28.22.62` and username `administrator`
 
 1. Installation of MySQL Server
 2. Installation of supervisord module
-3. Installation of CMS Server with all the required packagez
+3. Installation of CMS Server with all the required packages
 4. Installation of CSM Plugin Engine
 
 
