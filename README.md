@@ -53,5 +53,12 @@ The default configuration variables are in group_vars/all file.
   supervisor_webpass: supervisor
 
   # Optional installation of CSM Plugin Engine
-  install_csmpe: true```
+  install_csmpe: true
+```
+
+
+# Supervisord Web GUI.
+The CSM Server can be controlled by supervisord Web GUI.
+The WebGUI is running on port 5001.
+
 
