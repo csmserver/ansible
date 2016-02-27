@@ -13,8 +13,8 @@
   cd ansible
 ```
 
-## Update the 'production' file
-The example file with the list of production servers is included in the repo: `production`. The file needs to be updated accordingly. Here is the example:
+## Update the `production` file
+The example file with the list of production servers is included in the file `production`. The file needs to be updated accordingly. Here is the example:
 
 ```csm ansible_host=172.28.22.62 ansible_user=administrator```
 
