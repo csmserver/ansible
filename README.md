@@ -13,17 +13,23 @@
   cd ansible
 ```
 
-## Edit update the production file
+## Update the 'production' file
 The example file with the list of production servers is included in the repo: `production`. The file needs to be updated accordingly. Here is the example:
 
 ```csm ansible_host=172.28.22.62 ansible_user=administrator```
 
 It defines host `csm` with ip `172.28.22.62` and username `administrator`
 
-# Play the playbook to install CSM Server
+# Run the playbook to install CSM Server
 
 ```
   ansible-playbook -i production site.yml --ask-become-pass --ask-pass
+```
+
+Pass the http_proxy if server needs proxy connection to install python packages or system packages.
+
+```
+  ansible-playbook -i production site.yml --ask-become-pass --ask-pass --extra-vars "http_proxy=<proxy_url>"
 ```
 
 # The following steps will be done automatically
@@ -51,9 +57,6 @@ The default configuration variables are in group_vars/all file.
 
   # git repo for CSM Server file
   git_repo: https://github.com/csm-aut/csm.git
-
-  # http proxy if needed ( could be removed )
-  http_proxy: https://proxy-rtp-1.cisco.com:8080
 
   # supervisor user and password for http interface
   supervisor_webuser: supervisor
