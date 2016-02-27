@@ -4,7 +4,6 @@ user=csmserver
 autostart=true
 autorestart=true
 directory={{ csm_path }}/csm/csmserver/
-environment=VIRTUAL_ENV="/opt/csm/csm/csmserver/env",PATH="$VIRTUAL_ENV/bin:$PATH"
 
 [program:dispatcher]
 command={{ csm_path }}/csm/csmserver/env/bin/python csmdispatcher.py
