@@ -2,14 +2,19 @@
 
 ## Install Ansible
 
-```pip install ansible```
+```
+  pip install ansible
+```
 
 ## Clone this repository
 
-```git clone https://github.com/csmserver/ansible.git```
+```
+  git clone https://github.com/csmserver/ansible.git
+  cd ansible
+```
 
 ## Edit update the production file
-The example list of productin servers is included in the repo. It needs to be updated. Here is the example:
+The example file with the list of production servers is included in the repo: `production`. The file needs to be updated accordingly. Here is the example:
 
 ```csm ansible_host=172.28.22.62 ansible_user=administrator```
 
@@ -17,7 +22,9 @@ It defines host `csm` with ip `172.28.22.62` and username `administrator`
 
 # Play the playbook to install CSM Server
 
-```ansible-playbook -i production site.yml --ask-become-pass --ask-pass```
+```
+  ansible-playbook -i production site.yml --ask-become-pass --ask-pass
+```
 
 # The following steps will be done automatically
 
@@ -57,8 +64,10 @@ The default configuration variables are in group_vars/all file.
 ```
 
 
-# Supervisord Web GUI.
+# Supervisord Web GUI
 The CSM Server can be controlled by supervisord Web GUI.
 The WebGUI is running on port 5001.
+
+![Alt text](/Screenshots/supervisord.png "Supervisord WebGUI Screenshot")
 
 
